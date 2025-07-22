@@ -1,11 +1,11 @@
 module.exports = {
-  title: 'Go Web Mini',
+  title: '智慧电厂',
 
   /**
    * @type {boolean} true | false
    * @description Whether show the settings right-panel
    */
-  showSettings: true,
+  showSettings: false,
 
   /**
    * @type {boolean} true | false

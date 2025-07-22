@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="user-bio">
+    <!-- <div class="user-bio">
       <div class="user-education user-bio-section">
         <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>Education</span></div>
         <div class="user-bio-section-body">
@@ -48,7 +48,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </el-card>
 </template>
 

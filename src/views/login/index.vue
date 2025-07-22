@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Go Web Mini</h3>
+        <h3 class="title">{{ title }}</h3>
       </div>
 
       <el-form-item prop="username">
@@ -45,7 +45,7 @@
         </el-form-item>
       </el-tooltip>
 
-      <el-button :loading="loading" type="primary" class="login-btn" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button :loading="loading" type="primary" class="login-btn" @click.native.prevent="handleLogin">登录</el-button>
 
     </el-form>
 
@@ -54,6 +54,7 @@
 
 <script>
 import JSEncrypt from 'jsencrypt'
+const defaultSettings = require('@/settings.js')
 
 export default {
   name: 'Login',
@@ -85,7 +86,8 @@ wLXapv+ZfsjG7NgdawIDAQAB
       capsTooltip: false,
       loading: false,
       redirect: undefined,
-      otherQuery: {}
+      otherQuery: {},
+      title: defaultSettings.title
     }
   },
   watch: {

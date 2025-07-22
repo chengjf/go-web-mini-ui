@@ -14,6 +14,8 @@
 </template>
 
 <script>
+const defaultSettings = require('@/settings.js')
+
 export default {
   name: 'SidebarLogo',
   props: {
@@ -24,7 +26,7 @@ export default {
   },
   data() {
     return {
-      title: 'Go Web Mini',
+      title: defaultSettings.title,
       logo: require('@/assets/sidebar-logo/webmini.png')
     }
   }
