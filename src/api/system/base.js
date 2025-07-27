@@ -21,3 +21,10 @@ export function logout() {
     method: 'post'
   })
 }
+
+export function getPublicKey() {
+  return request({
+    url: '/api/base/publicKey',
+    method: 'get'
+  })
+}

@@ -117,6 +117,7 @@
 import JSEncrypt from 'jsencrypt'
 import { getUsers, createUser, updateUserById, batchDeleteUserByIds } from '@/api/system/user'
 import { getRoles } from '@/api/system/role'
+import { getPublicKey } from '@/api/system/base'
 
 export default {
   name: 'User',
@@ -153,12 +154,7 @@ export default {
 
       passwordType: 'password',
 
-      publicKey: `-----BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDbOYcY8HbDaNM9ooYXoc9s+R5o
-R05ZL1BsVKadQBgOVH/kj7PQuD+ABEFVgB6rJNi287fRuZeZR+MCoG72H+AYsAhR
-sEaB5SuI7gDEstXuTyjhx5bz0wUujbDK4VMgRfPO6MQo+A0c95OadDEvEQDG3KBQ
-wLXapv+ZfsjG7NgdawIDAQAB
------END PUBLIC KEY-----`,
+      publicKey: '',
 
       // dialog对话框
       submitLoading: false,
@@ -209,8 +205,18 @@ wLXapv+ZfsjG7NgdawIDAQAB
   created() {
     this.getTableData()
     this.getRoles()
+    this.loadPublicKey()
   },
   methods: {
+    async loadPublicKey() {
+      this.loading = true
+      try {
+        const { data } = await getPublicKey()
+        this.publicKey = data.publicKey
+      } finally {
+        this.loading = false
+      }
+    },
     // 查询
     search() {
       this.params.pageNum = 1

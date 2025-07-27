@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import { getPublicKey } from '@/api/system/base'
 import JSEncrypt from 'jsencrypt'
 const defaultSettings = require('@/settings.js')
 
@@ -77,12 +78,7 @@ export default {
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       passwordType: 'password',
-      publicKey: `-----BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDbOYcY8HbDaNM9ooYXoc9s+R5o
-R05ZL1BsVKadQBgOVH/kj7PQuD+ABEFVgB6rJNi287fRuZeZR+MCoG72H+AYsAhR
-sEaB5SuI7gDEstXuTyjhx5bz0wUujbDK4VMgRfPO6MQo+A0c95OadDEvEQDG3KBQ
-wLXapv+ZfsjG7NgdawIDAQAB
------END PUBLIC KEY-----`,
+      publicKey: '',
       capsTooltip: false,
       loading: false,
       redirect: undefined,
@@ -111,11 +107,21 @@ wLXapv+ZfsjG7NgdawIDAQAB
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
+    this.loadPublicKey()
   },
   destroyed() {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
+    async loadPublicKey() {
+      this.loading = true
+      try {
+        const { data } = await getPublicKey()
+        this.publicKey = data.publicKey
+      } finally {
+        this.loading = false
+      }
+    },
     checkCapslock(e) {
       const { key } = e
       this.capsTooltip = key && key.length === 1 && (key >= 'A' && key <= 'Z')

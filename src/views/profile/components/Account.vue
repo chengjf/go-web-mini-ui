@@ -42,6 +42,7 @@
 import { changePwd } from '@/api/system/user'
 import store from '@/store'
 import JSEncrypt from 'jsencrypt'
+import { getPublicKey } from '@/api/system/base'
 
 export default {
   data() {
@@ -76,18 +77,25 @@ export default {
           { required: true, validator: confirmPass, trigger: 'blur' }
         ]
       },
-      publicKey: `-----BEGIN PUBLIC KEY-----
-MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDbOYcY8HbDaNM9ooYXoc9s+R5o
-R05ZL1BsVKadQBgOVH/kj7PQuD+ABEFVgB6rJNi287fRuZeZR+MCoG72H+AYsAhR
-sEaB5SuI7gDEstXuTyjhx5bz0wUujbDK4VMgRfPO6MQo+A0c95OadDEvEQDG3KBQ
-wLXapv+ZfsjG7NgdawIDAQAB
------END PUBLIC KEY-----`,
+      publicKey: '',
       passwordTypeOld: 'password',
       passwordTypeNew: 'password',
       passwordTypeConfirm: 'password'
     }
   },
+  mounted() {
+    this.loadPublicKey()
+  },
   methods: {
+    async loadPublicKey() {
+      this.loading = true
+      try {
+        const { data } = await getPublicKey()
+        this.publicKey = data.publicKey
+      } finally {
+        this.loading = false
+      }
+    },
     submitForm() {
       this.$refs['dialogForm'].validate(async valid => {
         if (valid) {
